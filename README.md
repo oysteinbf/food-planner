@@ -1,4 +1,7 @@
-# food-planner
+# food-planner 
+Create a collection of recipes, plan your week, create grocery lists etc.
+
+[recipe-db](https://github.com/oysteinbf/recipe-db) is used as the backend API.
 
 ## Project setup
 ```

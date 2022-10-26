@@ -1,0 +1,41 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Chana Masala",
+      "ingredients": "Ris, mutti, kokosmelk, kikerter",
+      "directions": "Bland kikerter og mutti, kok ris og boom så er det ferdig",
+      "time": "40-60 min",
+      "isFav": false,
+      "show": false,
+      "tags": [
+        "vegetar",
+        "favoritt"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Poke bowl",
+      "ingredients": "Rå laks, agurk, ris, avokado",
+      "directions": "Skjær opp laksen i terninger, bland alt i en bolle",
+      "time": "20-30 min",
+      "isFav": false,
+      "show": false,
+      "tags": [
+        "fisk"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Tomatsuppe",
+      "ingredients": "2 sjalottløk, 2-3 fedd hvitløk, chili ++",
+      "directions": "Stek løk i olivenolje, tilsett tomater og la koke",
+      "time": "20-30 min",
+      "isFav": true,
+      "show": false,
+      "tags": [
+        "suppe"
+      ]
+    }
+  ]
+}
