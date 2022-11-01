@@ -7,7 +7,7 @@
   <input type="text" v-model="searchInput" placeholder="Søk oppskrifter..." />
   <div class="recipe-box" v-for="recipe in filteredList()" :key="recipe.id" :class="{ fav: recipe.isFav }" @click.ctrl="toggleShow(recipe)">
           <h2>{{ recipe.name }}</h2>
-          <Recipe :name="recipe.name" :id="recipe.id" :show="recipe.show" :ingredients="recipe.ingredients" :directions="recipe.directions" :isFav="recipe.isFav" @close="toggleShow(recipe)"/>
+          <Recipe v-bind="recipe" @close="toggleShow(recipe)"/>
           <button @click="toggleFav(recipe)">
             <span v-if="!recipe.isFav">Legg til meny</span>
             <span v-if="recipe.isFav">Fjern fra meny</span>
@@ -18,8 +18,6 @@
   <div v-if="searchInput&&!filteredList().length">
      <p>Ingen oppskrifter funnet!</p>
   </div>
-
-    
   </div>
 
   <div class="item2">
@@ -27,13 +25,12 @@
   Valgte retter:
   <div class="recipe-box" v-for="recipe in favRecipies" :key="recipe.id" :class="{ fav: recipe.isFav }" @click.ctrl="toggleShow(recipe)">
           <h2>{{ recipe.name }}</h2>
-          <Recipe :name="recipe.name" :id="recipe.id" :show="recipe.show" :ingredients="recipe.ingredients" :directions="recipe.directions" :isFav="recipe.isFav" @close="toggleShow(recipe)"/>
+          <Recipe v-bind="recipe" theme="favTheme" @close="toggleShow(recipe)"/>
           <button @click="toggleFav(recipe)">Fjern fra meny</button>
           <button @click="toggleShow(recipe)">Detaljer</button>
        </div>
 
   </div>
-
 
   <div class="item3">Footer
     <div v-for="recipe in favRecipies" :key="recipe.id">
@@ -56,7 +53,6 @@ const {recipes, error, load} = getRecipes()
 load()
 
 let searchInput = ref("");
-const recipies = ["chana masala", "poke bowl", "pizza"]; // Hent fra db.json
 // Kan også bruke computed: https://vuejs.org/guide/essentials/computed.html#computed-caching-vs-methods
 function filteredList() { // Kan også lage denne som en "composable"
   return recipes.value.filter((recipe) =>
@@ -64,12 +60,10 @@ function filteredList() { // Kan også lage denne som en "composable"
   );
 }
 
-
 // Liste med oppskrifter som er markert som favoritter
 const favRecipies = computed(() => {
   return recipes.value.filter((recipe) => recipe.isFav)
 })
-
 
 // Bruker dette for å vise detaljer
 function toggleShow(recipe) {
