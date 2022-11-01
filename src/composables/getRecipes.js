@@ -6,11 +6,17 @@ const getRecipes = () => {
 
     const load = async() => {
       try {
-        let data = await fetch('http://localhost:3000/recipes')
+        let data = await fetch('http://localhost:8000/recipes',
+                              {method: 'GET'
+                            })
         if (!data.ok) {
           throw Error('No data available')
         }
         recipes.value = await data.json()
+        // Add field for marking an ingredient as complete
+        recipes.value.forEach(element => {
+          element.show = false
+        });
       }
       catch (err) {
         error.value = err.message
