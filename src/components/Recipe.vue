@@ -2,18 +2,18 @@
 
   <div v-if="props.show" class="backdrop" @click.self="closeModal">
     <div class="modal" :class="{ favTheme: theme === 'favTheme' }">
-      <h2>{{ props.name }} ({{props.category}})</h2>
+      <h2>{{ props.name }}</h2>
       <span>{{ props.introduction }} </span>
 
       <h3>Ingredienser</h3>
       <div v-for="ingredient in ingredients" :key="ingredient.name" >
         <!-- Mark as completed on click -->
         <li :class="{ completed: ingredient.isCompleted }" @click="toggleCompleted(ingredient)">
-          {{ ingredient.name }}: {{ ingredient.amount }} {{ ingredient.unit }}
+          {{ ingredient.name }}: {{ ingredient.amount }} {{ ingredient.unit }}<span v-if="ingredient.preparation_info">, {{ingredient.preparation_info}}</span>
         </li>
       </div>
 
-      <h3>Fremgangsmåte</h3>{{ props.directions }}
+      <h3>Fremgangsmåte</h3>
         <ol>
       <div v-for="step in method" :key="step.id">
         <li :class="{ completed: step.isCompleted }" @click="toggleCompleted(step)">
@@ -43,12 +43,9 @@ loadMethod()
 
 const props = defineProps({
     name: String,
-    category: String,
     introduction: String,
     id: Number,
     show: Boolean,
-    ingredients: String,
-    directions: String,
     theme: String
 })
 
