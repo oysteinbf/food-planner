@@ -6,10 +6,12 @@
       <span>{{ props.introduction }} </span>
 
       <h3>Ingredienser</h3>
+      <p>Antall porsjoner: <input type="number" min=1 v-model.number="new_n_servings" /></p>
       <div v-for="ingredient in ingredients" :key="ingredient.name" >
         <!-- Mark as completed on click -->
         <li :class="{ completed: ingredient.isCompleted }" @click="toggleCompleted(ingredient)">
-          {{ ingredient.name }}: {{ ingredient.amount }} {{ ingredient.unit }}<span v-if="ingredient.preparation_info">, {{ingredient.preparation_info}}</span>
+          {{ ingredient.name }}: {{ newAmount(ingredient.amount, props.n_servings, new_n_servings) }} {{ ingredient.unit }}<span v-if="ingredient.preparation_info">, {{ingredient.preparation_info}}</span>
+          
         </li>
       </div>
 
@@ -34,6 +36,7 @@
 
 import getIngredients from '@/composables/getIngredients'
 import getMethod from '@/composables/getMethod'
+import { ref, onMounted } from 'vue'
 
 const {ingredients, error, loadIngredient} = getIngredients(props.id)
 loadIngredient()
@@ -45,11 +48,23 @@ const props = defineProps({
     name: String,
     introduction: String,
     id: Number,
+    n_servings: Number,
     show: Boolean,
     theme: String
 })
 
 const emit = defineEmits(['close'])
+
+// To begin with, set the number of servings to the default value in the database
+const new_n_servings = ref()
+onMounted(() => {
+  new_n_servings.value = props.n_servings
+})
+
+// Calculate the new amount based on the number of servings the user chooses (n_new)
+function newAmount(amount, n_old, n_new) {
+  return (amount/n_old)*n_new
+}
 
 function closeModal() {
   emit('close')
@@ -101,5 +116,9 @@ li.completed {
   text-decoration: line-through
 }
 
+input[type=number] {
+  width:38px;
+  border-radius:10px;
+}
 
 </style>
