@@ -36,7 +36,7 @@
     <div v-for="recipe in favRecipies" :key="recipe.id">
     {{ recipe.name }}
   </div>
-  <button @click="saveFavorites(recipes)">Lagre favoritter</button>
+  <button @click="putFavourites(recipes)">Lagre favoritter</button>
   </div>
   </div>
 
@@ -48,6 +48,7 @@ import { ref, computed } from 'vue'
 // @ is an alias to /src
 import Recipe from '@/components/Recipe.vue'
 import getRecipes from '@/composables/getRecipes'
+import putFavourites from '@/composables/putFavourites'
 
 const {recipes, error, load} = getRecipes()
 load()
@@ -73,11 +74,6 @@ function toggleShow(recipe) {
 // Bruker dette for å velge ukesmeny osv.
 function toggleFav(recipe) {
   return recipe.isFav = !recipe.isFav
-}
-
-// Oppdater favoritter (som senere brukes til lage handleliste (kan også gjøres her?)
-function saveFavorites(recipes) {
-  console.log('PUT request som oppdaterer favoritt-status')
 }
 
 </script>
